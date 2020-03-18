@@ -1,6 +1,12 @@
 #include "../headers/minishell.h"
 #include "../Libft/libft.h"
 
+int ft_error(char *s)
+{
+	ft_putstr(s);
+	return (-1);
+}
+
 int		ft_dispatcher(t_struct *st)
 {
 	static char commande[7][7] = {{"cd"}, {"echo"}, {"pwd"}, {"export"}, {"unset"}, {"env"}, {"exit"}};
@@ -18,6 +24,8 @@ int		ft_dispatcher(t_struct *st)
 	}
 	if (i > 0)
 		return ((fct[i])(st));
+	else
+		return (ft_error("invalid command !"));
 	return (0);
 }
 
