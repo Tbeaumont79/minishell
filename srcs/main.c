@@ -2,10 +2,10 @@
 
 int		main(int ac, char **av)
 {
-	int				fd;
 	t_ministruct	st;
 
+	init_struct(&st);
 	while (!st.exit)
-	{
-	}
+		shell_init(&st);
+	return (0);
 }
