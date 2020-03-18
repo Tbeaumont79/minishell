@@ -7,7 +7,7 @@ int ft_error(char *s)
 	return (-1);
 }
 
-/*int		ft_dispatcher(t_struct *st)
+int		ft_dispatcher(t_struct *st)
 {
 	static char commande[7][7] = {{"cd"}, {"echo"}, {"pwd"}, {"export"}, {"unset"}, {"env"}, {"exit"}};
 	static int *(fct[7])(t_struct *st) = {ft_cd, ft_echo, ft_pwd, ft_export, ft_unset, ft_env, ft_exit}; // fonction a cree par la suite
@@ -27,7 +27,7 @@ int ft_error(char *s)
 	else
 		return (ft_error("invalid command !"));
 	return (0);
-}*/
+}
 
 int		main(void)
 {
