@@ -30,6 +30,7 @@ void				*ft_bzero(void *s, size_t n);
 void				*ft_calloc(size_t count, size_t size);
 int					ft_isalnum(int c);
 int					ft_isalpha(int c);
+void                ft_putstr(char *s);
 int					ft_isascii(int c);
 int					ft_isdigit(int c);
 int					ft_isprint(int c);
@@ -46,6 +47,7 @@ int					ft_strncmp(const char *s1, const char *s2, size_t i);
 char				*ft_strnstr(const char *haystack, const char *needle,
 					size_t len);
 char				*ft_strrchr(const char *str, int c);
+char    			*ft_strstr(char *str, char *to_find);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
