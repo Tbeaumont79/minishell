@@ -18,9 +18,11 @@ int		ft_dispatcher(t_struct *st)
 	{
 		if (ft_strstr(st->s, commande[i]))
 			break ;
+		else
+			return (-1);
 		i++;
 	}
-	if (i > 0 && ft_strstr(st->s, commande[i]))
+	if (i >= 0 && ft_strstr(st->s, commande[i]))
 		return ((fct[i])(st));
 	else
 		return (ft_error("invalid command !"));
@@ -45,8 +47,10 @@ int		main(void)
 		ft_putstr(st.s);
 		free(st.s);
 		shell_init();
+		if (ft_strchr(st.s, '\n'))
+			break ;			
 	}
 //	ft_putstr(st.s);
 //	free(st.s);
-	return (0);
+	return (ft_dispatcher(&st));
 }
