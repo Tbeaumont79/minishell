@@ -22,7 +22,7 @@ int		ft_dispatcher(t_struct *st)
 			break ;
 		i++;
 	}
-	if (i > 0)
+	if (i > 0 && ft_strstr(st->s, commande[i]))
 		return ((fct[i])(st));
 	else
 		return (ft_error("invalid command !"));
