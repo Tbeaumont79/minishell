@@ -1,7 +1,8 @@
 #include "../headers/minishell.h"
 #include "../Libft/libft.h"
 
-void	ft_unset(t_struct *st)
+int	ft_unset(t_struct *st)
 {
 	printf("unset\n");
+	return (0);
 }

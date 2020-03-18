@@ -10,13 +10,11 @@ int ft_error(char *s)
 int		ft_dispatcher(t_struct *st)
 {
 	static char commande[7][7] = {{"cd"}, {"echo"}, {"pwd"}, {"export"}, {"unset"}, {"env"}, {"exit"}};
-	static int *(fct[7])(t_struct *st) = {ft_cd, ft_echo, ft_pwd, ft_export, ft_unset, ft_env, ft_exit}; // fonction a cree par la suite
+	static int (*fct[7])(t_struct *st) = {ft_cd, ft_echo, ft_pwd, ft_export, ft_unset, ft_env, ft_exit}; // fonction a cree par la suite
 	int i;
-	int size;
 
 	i = 0;
-	size = ft_strlen(commande);
-	while (i < size)
+	while (i < 8)
 	{
 		if (ft_strstr(st->s, commande[i]))
 			break ;

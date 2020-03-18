@@ -1,6 +1,7 @@
 #include "../headers/minishell.h"
 
-void	init_struct(t_struct *st)
+int	init_struct(t_struct *st)
 {
 	st->exit = 0;
+	return (0);
 }

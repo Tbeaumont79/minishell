@@ -13,13 +13,13 @@ typedef struct			s_struct
 }						t_struct;
 
 void	shell_init(void);
-void	ft_cd(t_struct *st);
-void	ft_echo(t_struct *st);
-void	ft_exit(t_struct *st);
-void	ft_pwd(t_struct *st);
-void	ft_unset(t_struct *st);
-void	ft_env(t_struct *st);
-void	ft_export(t_struct *st);
+int	ft_cd(t_struct *st);
+int	ft_echo(t_struct *st);
+int	ft_exit(t_struct *st);
+int	ft_pwd(t_struct *st);
+int	ft_unset(t_struct *st);
+int	ft_env(t_struct *st);
+int	ft_export(t_struct *st);
 
 
 #endif
