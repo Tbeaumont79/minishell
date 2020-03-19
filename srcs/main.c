@@ -6,21 +6,6 @@ void	init_exit(t_struct *st)
 	st->exit = 0;
 }
 
-int		isok(t_struct *st, char *str)
-{
-	int		i;
-	int		len;
-
-	len = ft_strlen(str);
-	i = ft_strlen(st->s) - 1;
-	if (i == len)
-		return (0);
-	if (i > len && (st->s[len + 1] != '\n' || st->s[len + 1] != ' ' || st->s[len + 1] != '\0'))
-		return (1);
-	else
-		return (0);
-}
-
 int		ft_error(char *s)
 {
 	ft_putstr("zsh: command not found: ");
@@ -28,24 +13,68 @@ int		ft_error(char *s)
 	return (-1);
 }
 
+int		get_opt(t_struct *st)
+{
+	int i;
+	int size;
+	int tmp;
+
+	i = 0;
+	size = 0;
+	while (st->s[i])
+	{
+		if (st->s[i] == '-')
+			break ;
+		i++;
+	}
+	if (!st->s[i])
+		return (0);
+	i++;
+	tmp = i;
+	while (ft_isalpha(st->s[i]))
+	{
+		size++;
+		i++;
+		if (st->s[i] == ' ')
+			break ;
+	}
+	if (!(st->datas[opt] = (char *)malloc(sizeof(char) * (size + 1))))
+		return (-1);
+	tmp--;
+	size = 0;
+	while (++tmp < i)
+		st->datas[opt][size++] = st->s[tmp];
+	st->datas[opt][size] = '\0';
+	return (0);
+}
+
+int		get_path(t_struct *st)
+{
+	if (!st->datas[comand][0])
+		return (-1);
+	
+}
+
 int		ft_dispatcher(t_struct *st)
 {
 	static char commande[7][7] = {{"cd"}, {"echo"}, {"pwd"}, {"export"}, {"unset"}, {"env"}, {"exit"}};
 	static int (*fct[7])(t_struct *st) = {ft_cd, ft_echo, ft_pwd, ft_export, ft_unset, ft_env, ft_exit}; // fonction a cree par la suite
 	int i;
+	int j;
 
+	j = 0;
 	i = 0;
 	while (i < 7)
 	{
-		if (!(ft_strcmp(st->s, commande[i])))
+		while (st->s[j])
 		{
-			if (!(isok(st, commande[i])))
-				return ((fct[i])(st));
-			else
-				return (ft_error(st->s));
+			st->datas[comand] = ft_strstr(st->s, commande[i]) ? ft_strdup(commande[i]) : "";
+			if ((get_opt(st)) == -1)
+				return (-1);
+			
+			j++;		
 		}
-		else
-			i++;
+		i++;
 	}
 	return (ft_error(st->s));
 }
@@ -61,6 +90,8 @@ int		main(void)
 	tmp = NULL;
 	init_exit(&st);
 	shell_init();
+	if (!(st.datas = (char **)malloc(sizeof(char *) * enum_size)))
+		return (-1);
 	while (!(st.exit))
 	{
 		while ((ret = (read(0, buf, BUFFER_SIZE))) > 0 && !(st.exit))

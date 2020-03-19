@@ -3,6 +3,5 @@
 
 int	ft_cd(t_struct *st)
 {
-	printf("cd\n");
 	return (0);
 }
