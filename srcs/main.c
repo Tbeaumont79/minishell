@@ -1,8 +1,29 @@
 #include "../headers/minishell.h"
 #include "../Libft/libft.h"
 
-int ft_error(char *s)
+void	init_exit(t_struct *st)
 {
+	st->exit = 0;
+}
+
+int		isok(t_struct *st, char *str)
+{
+	int		i;
+	int		len;
+
+	len = ft_strlen(str);
+	i = ft_strlen(st->s) - 1;
+	if (i == len)
+		return (0);
+	if (i > len && (st->s[len + 1] != '\n' || st->s[len + 1] != ' ' || st->s[len + 1] != '\0'))
+		return (1);
+	else
+		return (0);
+}
+
+int		ft_error(char *s)
+{
+	ft_putstr("zsh: command not found: ");
 	ft_putstr(s);
 	return (-1);
 }
@@ -14,43 +35,45 @@ int		ft_dispatcher(t_struct *st)
 	int i;
 
 	i = 0;
-	while (i < 8)
+	while (i < 7)
 	{
-		if (ft_strstr(st->s, commande[i]))
-			break ;
+		if (!(ft_strcmp(st->s, commande[i])))
+		{
+			if (!(isok(st, commande[i])))
+				return ((fct[i])(st));
+			else
+				return (ft_error(st->s));
+		}
 		else
-			return (-1);
-		i++;
+			i++;
 	}
-	if (i >= 0 && ft_strstr(st->s, commande[i]))
-		return ((fct[i])(st));
-	else
-		return (ft_error("invalid command !"));
-	return (0);
+	return (ft_error(st->s));
 }
 
 int		main(void)
 {
 	t_struct	st;
-	int ret;
-	char *tmp;
-	char buf[BUFFER_SIZE + 1];
+	int			ret;
+	char		*tmp;
+	char		buf[BUFFER_SIZE + 1];
 
 	ret = 1;
 	tmp = NULL;
+	init_exit(&st);
 	shell_init();
-	while ((ret = (read(0, buf, BUFFER_SIZE))) > 0)
+	while (!(st.exit))
 	{
-		buf[ret] = '\0';
-		if (!(st.s = ft_strdup(buf)))
-			return (-1);
-		ft_putstr(st.s);
-		free(st.s);
-		shell_init();
-		if (ft_strchr(st.s, '\n'))
-			break ;			
+		while ((ret = (read(0, buf, BUFFER_SIZE))) > 0 && !(st.exit))
+		{
+			buf[ret] = '\0';
+			if (!(st.s = ft_strdup(buf)))
+				return (-1);
+			ft_dispatcher(&st);
+			free(st.s);
+			shell_init();
+			if (ft_strchr(st.s, '\n'))
+				break ;
+		}
 	}
-//	ft_putstr(st.s);
-//	free(st.s);
-	return (ft_dispatcher(&st));
+	return (0);
 }
