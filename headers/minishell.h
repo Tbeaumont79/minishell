@@ -6,10 +6,19 @@
 # include <stdlib.h>
 # define BUFFER_SIZE 42
 
+typedef enum e_enum
+{
+	comand,
+	opt,
+	path,
+	enum_size
+}			 t_enum;
+
 typedef struct			s_struct
 {
 	int					exit;
 	char				*s;
+	char				**datas;
 }						t_struct;
 
 void	shell_init(void);
